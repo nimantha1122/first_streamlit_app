@@ -5,9 +5,9 @@ import snowflake.connector
 
 my_cnx = snowflake.connector.connect(**streamlit.secrets["snowflake"])
 my_cur = my_cnx.cursor()
-my_cur.execute("SELECT CURRENT_USER(), CURRENT_ACCOUNT(), CURRENT_REGION()")
+my_cur.execute("select * from pc_rivery_db.public.fruit_load_list")
 my_data_row = my_cur.fetchone()
-streamlit.text("Hello from Snowflake:")
+streamlit.text("The fruit load list contains:")
 streamlit.text(my_data_row)
 
 streamlit.title('My parents new healthy diner')
@@ -44,23 +44,23 @@ streamlit.dataframe(fruityvice_normalized)
 
 
 
-# use role pc_rivery_role;
-# use warehouse pc_rivery_wh;
+use role pc_rivery_role;
+use warehouse pc_rivery_wh;
 
-# create or replace TABLE PC_RIVERY_DB.PUBLIC.FRUIT_LOAD_LIST (
-# 	FRUIT_NAME VARCHAR(25)
-# );
+create or replace TABLE PC_RIVERY_DB.PUBLIC.FRUIT_LOAD_LIST (
+	FRUIT_NAME VARCHAR(25)
+);
 
-# insert into PC_RIVERY_DB.PUBLIC.FRUIT_LOAD_LIST
-# values ('banana')
-# , ('cherry')
-# , ('strawberry')
-# , ('pineapple')
-# , ('apple')
-# , ('mango')
-# , ('coconut')
-# , ('plum')
-# , ('avocado')
-# , ('starfruit');
+insert into PC_RIVERY_DB.PUBLIC.FRUIT_LOAD_LIST
+values ('banana')
+, ('cherry')
+, ('strawberry')
+, ('pineapple')
+, ('apple')
+, ('mango')
+, ('coconut')
+, ('plum')
+, ('avocado')
+, ('starfruit');
 
 
