@@ -53,3 +53,8 @@ fruityvice_response2 = requests.get("https://fruityvice.com/api/fruit/" + add_my
 fruityvice_normalized2 = pandas.json_normalize(fruityvice_response2.json())
 # Outputs table as a dataframe onto streamlit app UI
 streamlit.dataframe(fruityvice_normalized2)
+
+
+my_cur.execute("insert into fruit_load_list values ('from streamlit')")
+
+
