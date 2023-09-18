@@ -28,14 +28,20 @@ streamlit.dataframe(fruits_to_show)
 
 ############################# API tutorial on streamlit##################################
 streamlit.header("Fruityvice Fruit Advice!")
-fruit_choice = streamlit.text_input('What fruit would you like information about?','Kiwi')
-streamlit.write('The user entered ', fruit_choice)
-fruityvice_response = requests.get("https://fruityvice.com/api/fruit/" + fruit_choice)
+try:
+  fruit_choice = streamlit.text_input('What fruit would you like information about?','Kiwi')
+  if not fruit_choice:
+    streamlit.error("Please select a fruit to get information.")
+  else:
+  streamlit.write('The user entered ', fruit_choice)
+  fruityvice_response = requests.get("https://fruityvice.com/api/fruit/" + fruit_choice)
+  # Normalize semi-structured JSON data into a flat table.
+  fruityvice_normalized = pandas.json_normalize(fruityvice_response.json())
+  # Outputs table as a dataframe onto streamlit app UI
+  streamlit.dataframe(fruityvice_normalized)
 
-# Normalize semi-structured JSON data into a flat table.
-fruityvice_normalized = pandas.json_normalize(fruityvice_response.json())
-# Outputs table as a dataframe onto streamlit app UI
-streamlit.dataframe(fruityvice_normalized)
+except URLError as e:
+  streamlit.error()
 
 
 # Dont run code past here while troubleshooting
