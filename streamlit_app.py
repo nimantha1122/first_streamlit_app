@@ -50,6 +50,16 @@ except URLError as e:
   streamlit.error()
 
 
+# Allow the end user to add a fruit
+add_my_fruit = streamlit.text_input('What fruit would you like to add?','Jackfruit')
+streamlit.write('The user entered ', add_my_fruit)
+fruityvice_response2 = requests.get("https://fruityvice.com/api/fruit/" + add_my_fruit)
+
+# Normalize semi-structured JSON data into a flat table.
+fruityvice_normalized2 = pandas.json_normalize(fruityvice_response2.json())
+# Outputs table as a dataframe onto streamlit app UI
+streamlit.dataframe(fruityvice_normalized2)
+
 streamlit.header("The fruit load list contains:")
 #Snowflake relted functions
 def get_fruit_load_list():
