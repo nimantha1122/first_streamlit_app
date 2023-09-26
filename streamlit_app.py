@@ -51,14 +51,26 @@ except URLError as e:
 
 
 # Allow the end user to add a fruit
-add_my_fruit = streamlit.text_input('What fruit would you like to add?','Jackfruit')
-streamlit.write('The user entered ', add_my_fruit)
-fruityvice_response2 = requests.get("https://fruityvice.com/api/fruit/" + add_my_fruit)
+def insert_row_snowflake(new_fruit):
+    with my_cnx.cursor() as my_cur:
+        my_cur.execute("insert into fruit_load_list values ('from streamlit')")
+        return "Thanks for adding " + new_fruit
+    
+add_my_fruit = streamlit.text_input('What fruit would you like to add?')
+if streamlit.button('Add a Fruit to the list'):
+    my_cnx = snowflake.connector.connect(**streamlit.secrets["snowflake"])
+    back_from_function = insert_row_snowflake(add_my_fruit)
+    streamlit.text(back_from_function)
 
-# Normalize semi-structured JSON data into a flat table.
-fruityvice_normalized2 = pandas.json_normalize(fruityvice_response2.json())
-# Outputs table as a dataframe onto streamlit app UI
-streamlit.dataframe(fruityvice_normalized2)
+# This wll not work correctly yet
+# my_cur.execute("insert into fruit_load_list values ('from streamlit')")
+
+# fruityvice_response2 = requests.get("https://fruityvice.com/api/fruit/" + add_my_fruit)
+
+# # Normalize semi-structured JSON data into a flat table.
+# fruityvice_normalized2 = pandas.json_normalize(fruityvice_response2.json())
+# # Outputs table as a dataframe onto streamlit app UI
+# streamlit.dataframe(fruityvice_normalized2)
 
 streamlit.header("The fruit load list contains:")
 #Snowflake relted functions
