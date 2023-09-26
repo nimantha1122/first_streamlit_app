@@ -72,7 +72,7 @@ if streamlit.button('Add a Fruit to the list'):
 # # Outputs table as a dataframe onto streamlit app UI
 # streamlit.dataframe(fruityvice_normalized2)
 
-streamlit.header("The fruit load list contains:")
+streamlit.header("View Our Fruit list - Add your Favourites!")
 #Snowflake relted functions
 def get_fruit_load_list():
     with my_cnx.cursor() as my_cut:
@@ -81,7 +81,7 @@ def get_fruit_load_list():
         return my_cur.fetchall()
         
 # Add a button to the fruit load list
-if streamlit.button('Get Fruit Load List'):
+if streamlit.button('Get Fruit List'):
     my_cnx = snowflake.connector.connect(**streamlit.secrets["snowflake"])
     my_data_rows = get_fruit_load_list()
     my_cnx.close()
