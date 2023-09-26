@@ -79,10 +79,12 @@ def get_fruit_load_list():
         my_cur = my_cnx.cursor()
         my_cur.execute("select * from pc_rivery_db.public.fruit_load_list")
         return my_cur.fetchall()
+        
 # Add a button to the fruit load list
 if streamlit.button('Get Fruit Load List'):
     my_cnx = snowflake.connector.connect(**streamlit.secrets["snowflake"])
     my_data_rows = get_fruit_load_list()
+    my_cnx.close()
     streamlit.dataframe(my_data_rows)
     
 # Dont run code past here while troubleshooting
